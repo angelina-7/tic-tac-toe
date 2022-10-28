@@ -1,10 +1,109 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-image: url("paper.jpg");
+    background-color: bisque;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    color: #000;
+}
+
+form {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    border-radius: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.2);
+}
+
+input {
+    background: transparent;
+    border: none;
+    width: 200px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+}
+
+input[type="submit"] {
+    margin: 10px 0 0 50px;
+    padding: 10px;
+    width: 100px;
+}
+
+input[type="submit"]:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.alert {
+    display: none;
+    padding: 5px;
+    border-radius: 20px;
+    color: rgb(158, 8, 8);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.game-box {
+    max-width: 360px;
+    padding: 0 40px 0 40px;
+    display: inline-block;
+}
+
+.chat-box {
+    padding: 10px 40px 0 40px;
+    display: none;
+    vertical-align: top;
+}
+
+#chat {
+    width: 210px;
+    height: 300px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.2);
+}
+
+#chat-input {
+    padding: 7px;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 180px;
+    display: inline-block;
+}
+
+#chat-btn {
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 5px 5px 10px -4px rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+    padding: 6px 7px 3px 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#chat-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#chat-btn img {
+    width: 20px;
+    height: 20px;
+}
+
 #board {
-    width: 150px;
+    width: 210px;
     display: none;
 }
 
 .row {
-    height: 50px;
+    height: 70px;
     margin: 0;
     padding: 0;
 }
@@ -16,11 +115,14 @@
 }
 
 .cell {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     border: 1px solid black;
     box-sizing: border-box;
     float: left;
     margin: 0;
-    padding: 0;
+    padding: 15px;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
 }

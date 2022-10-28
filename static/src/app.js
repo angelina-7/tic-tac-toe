@@ -1,34 +1,6 @@
+let username = '';
 let symbol = '';
-let socket = null
-
-document.getElementById('init-form').addEventListener('submit', onSubmit)
-
-function onSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const roomId = formData.get('room');
-
-    init(roomId)
-
-}
-
-function init(roomId) {
-    socket = io();
-
-    socket.on('connect', () => {
-        socket.emit('selectRoom', roomId)
-    });
-
-    socket.on('symbol', newSymbol => {
-        symbol = newSymbol;
-        socket.on('position', place);
-        socket.on('newGame', newGame);
-        startGame();
-    });
-
-    socket.on('error', (error) => alert(error));
-}
-
+let socket = null;
 
 const combinations = [
     ['00', '01', '02'],
@@ -41,19 +13,74 @@ const combinations = [
     ['02', '11', '20']
 ];
 
+const chat = document.getElementById('chat');
+const alertText = document.querySelector('.alert');
+
+document.getElementById('init-form').addEventListener('submit', onSubmit);
+
+document.getElementById('chat-btn').addEventListener('click', sendMessage)
+
+function onSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const roomId = formData.get('room');
+    username = formData.get('username');
+
+    if(roomId && username){
+        init(roomId, username);
+    } else {
+        alertText.style.display = "block";
+        alertText.textContent = "All fields must be filled."
+    }
+}
+
+function sendMessage(event) {
+    const chatInput = document.getElementById('chat-input');
+    socket.emit('message', {username, msg: chatInput.value})
+
+    chatInput.value = "";
+}
+
+function init(roomId, username) {
+    socket = io();
+
+    socket.on('connect', () => {
+        socket.emit('selectRoom', roomId, username);
+    });
+    socket.on('welcome', msg => {
+        chat.parentElement.style.display = 'inline-block';
+        chat.textContent += msg + "\n";
+    })
+
+    socket.on('symbol', newSymbol => {
+        symbol = newSymbol;
+        startGame();
+    });
+
+    socket.on('newGame', newGame);
+    socket.on('position', place);
+    socket.on('message', displayMessage)
+
+    socket.on('error', (error) => alert(error));
+}
+
+function displayMessage(data) {
+    chat.textContent += `${data.username}: ${data.msg}\n`;
+}
 
 
 function startGame() {
+    socket.emit('message', { username, msg: `playing with ${symbol}` });
     document.getElementById('init').style.display = 'none';
+    alertText.style.display = "none";
     const board = document.getElementById('board');
     board.style.display = 'block';
 
     board.addEventListener('click', onClick);
-
-    newGame();
 }
 
 function newGame() {
+    chat.textContent += "New Game started\n";
     [...document.querySelectorAll('.cell')].forEach(e => e.textContent = '');
 }
 
