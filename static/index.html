@@ -13,47 +13,55 @@
 
 <body>
 
-    <div class="game-box">
-        <h1>Tic-Tac-Toe</h1>
-        <p class="alert"></p>
-        <div id="init">
-            <h3>Welcome!</h3>
-            <form id="init-form">
-                <label for="room">Room:</label><br>
-                <input type="text" name="room"><br>
-                <label for="username">Username:</label><br>
-                <input type="text" name="username"><br>
-                <input type="submit" value="Enter room">
-            </form>
+    <div class="container">
+        <div class="game-box">
+            <h1>Tic-Tac-Toe</h1>
+            <p class="alert"></p>
+            <div id="init">
+                <h3>Welcome!</h3>
+                <form id="init-form">
+                    <label for="room">Room:</label><br>
+                    <input type="text" name="room"><br>
+                    <label for="username">Username:</label><br>
+                    <input type="text" name="username"><br>
+                    <input type="submit" value="Enter room">
+                </form>
+            </div>
+
+            <div id="board">
+                <div class="row">
+                    <div id="00" class="cell"></div>
+                    <div id="01" class="cell"></div>
+                    <div id="02" class="cell"></div>
+                </div>
+                <div class="row">
+                    <div id="10" class="cell"></div>
+                    <div id="11" class="cell"></div>
+                    <div id="12" class="cell"></div>
+                </div>
+                <div class="row">
+                    <div id="20" class="cell"></div>
+                    <div id="21" class="cell"></div>
+                    <div id="22" class="cell"></div>
+                </div>
+                <button id="new-game-btn" class="btn"><img src="new.png">
+                    <h2>Game</h2>
+                </button>
+            </div>
         </div>
 
-        <div id="board">
-            <div class="row">
-                <div id="00" class="cell"></div>
-                <div id="01" class="cell"></div>
-                <div id="02" class="cell"></div>
-            </div>
-            <div class="row">
-                <div id="10" class="cell"></div>
-                <div id="11" class="cell"></div>
-                <div id="12" class="cell"></div>
-            </div>
-            <div class="row">
-                <div id="20" class="cell"></div>
-                <div id="21" class="cell"></div>
-                <div id="22" class="cell"></div>
-            </div>
+        <div class="chat-box">
+            <h3>Chat</h3>
+            <textarea id="chat" disabled></textarea>
+            <br>
+            <input id="chat-input" type="text" placeholder="Message...">
+            <button id="chat-btn" class="btn"><img src="send.png"></button>
         </div>
     </div>
 
-    <div class="chat-box">
-        <h3>Chat</h3>
-        <textarea id="chat" disabled></textarea>
-        <br>
-        <input id="chat-input" type="text" placeholder="Message...">
-        <button id="chat-btn"><img src="send.png"></button>
-    </div>
-
+    <footer>
+        <h4>© Design by Angelina</h4>
+    </footer>
 </body>
 
 </html>

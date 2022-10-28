@@ -1,6 +1,7 @@
 let username = '';
 let symbol = '';
 let socket = null;
+let clicked = false;
 
 const combinations = [
     ['00', '01', '02'],
@@ -18,7 +19,8 @@ const alertText = document.querySelector('.alert');
 
 document.getElementById('init-form').addEventListener('submit', onSubmit);
 
-document.getElementById('chat-btn').addEventListener('click', sendMessage)
+document.getElementById('chat-btn').addEventListener('click', sendMessage);
+document.getElementById('new-game-btn').addEventListener('click', () => socket.emit('newGame'));
 
 function onSubmit(event) {
     event.preventDefault();
@@ -26,7 +28,7 @@ function onSubmit(event) {
     const roomId = formData.get('room');
     username = formData.get('username');
 
-    if(roomId && username){
+    if (roomId && username) {
         init(roomId, username);
     } else {
         alertText.style.display = "block";
@@ -36,7 +38,7 @@ function onSubmit(event) {
 
 function sendMessage(event) {
     const chatInput = document.getElementById('chat-input');
-    socket.emit('message', {username, msg: chatInput.value})
+    socket.emit('message', { username, msg: chatInput.value })
 
     chatInput.value = "";
 }
@@ -61,7 +63,10 @@ function init(roomId, username) {
     socket.on('position', place);
     socket.on('message', displayMessage)
 
-    socket.on('error', (error) => alert(error));
+    socket.on('error', (error) => {
+        alert(error);
+        chat.parentElement.style.display = 'none';
+    });
 }
 
 function displayMessage(data) {
@@ -87,18 +92,23 @@ function newGame() {
 function onClick(event) {
     if (event.target.classList.contains('cell')) {
         if (event.target.textContent == '') {
-            const id = event.target.id;
-            console.log(id);
-            socket.emit('position', {
-                id,
-                symbol
-            })
+            if (!clicked) {
+                const id = event.target.id;
+                socket.emit('position', {
+                    id,
+                    symbol
+                });
+                clicked = true;
+            }
         }
     }
 }
 
-function place({ id, symbol }) {
-    document.getElementById(id).textContent = symbol;
+function place(data) {
+    if (data.symbol != symbol) {
+        clicked = false;
+    }
+    document.getElementById(data.id).textContent = data.symbol;
     setTimeout(hasCombination, 0);
 }
 
